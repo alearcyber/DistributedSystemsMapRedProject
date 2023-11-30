@@ -1,0 +1,14 @@
+FROM apache/hadoop:3
+
+# Expose the necessary ports for NameNode
+EXPOSE 8020 9000 50070 9870
+
+#expose ports for the ResourceManager
+#EXPOSE 8030 8031 8032 8033 8088
+
+# Set the working directory
+WORKDIR /opt/hadoop
+
+#start the namenode daemon
+#CMD ["hdfs", "namenode", "-d"]
+CMD ["hdfs", "namenode"]

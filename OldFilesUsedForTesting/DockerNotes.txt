@@ -1,0 +1,4 @@
+Command to run a docker compose:
+	sudo docker-compose -f ./docker-compose.yaml up -d
+
+

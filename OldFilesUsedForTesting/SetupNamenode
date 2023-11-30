@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#check for arg 1
+if [ $# -lt 1 ]; then
+  echo "Error: requires at least 1 positional argument. The id of the namenode"
+
+
+#Correct number of arguments received
+else
+  #move files to the namenode
+  docker cp reducer.py $1:/
+  docker cp mapper.py $1:/
+  docker cp oldmansea.txt $1:/
+  docker cp SetupThisNode $1:/
+fi

@@ -1,0 +1,60 @@
+
+--Docker Notes---
+
+sudo docker image build -t <set-name-of-image> -f <build file name> .
+
+
+
+--explaining weighted mean in reduce--
+Need a weighted mean for compositing averages in the reduce phase. This is because, as the reducing is done in a
+distributed manner, I don't necessarily know what what previously composited of the values currently being composited,
+thus I have to ensure I include the number of images alongside the means, and take a weighted mean when compositing.
+
+As an example. If I had a mean score for 99 images being composited with a mean score of 1 image, taking the mean of
+those two means would NOT be equal to the mean of all 100 images outright.
+
+NOTE: EXPLAINING WEIGHTED MEAN IS NOT NEEDED BECAUSE I THINK THE REDUCE STEPS WILL HAVE ACCESS TO EVERYTHING, NOT SURE YET.
+
+
+
+
+-- Naive Verification of colors--
+average of all the reds: 88.37217821701329
+average of all the greens: 90.45986474366106
+average of all the blues: 90.92509901634317
+
+This data was taken by the verify_colors routine in the naive-verify.py file. It was done by pairing all the
+colors with all of the images, then going thru 1 by 1 in an imperative manner (not distributed) and grabbing the
+average for each pixel value.
+
+
+
+--demonstrating that the mapper function is being done in a distributed manner--
+Have a server running on the network that is separate from the cluster.
+Have the map function send a status message to that server with info about itself.
+
+
+--Doing color locally--
+Results:
+    blue    90.92509901634317
+    green   90.45986474366107
+    red     88.37217821701327
+They are the exact same(disregarding float precision) as the naive verification, so the functions are working properly.
+
+
+
+
+----I LEFT OFF----
+I left off refactoring/reorganizing my files. Last major thing programmed was the reduce routine and testing it.
+Testing went good. NEED TO MAKE THE REDUCER WORK WITH GENERATOR/ITERATOR. Trying to figure out what the "groupby" is
+doing in the example in the michael-noll.com example in the better version of the reducer.
+
+I also just fixed the mapper function so that it expects the data to already be split up pairwise.
+
+ALSO, need to include something in my reducer that will check for values where something failed and throw them out.
+
+- For determining which of the two segments is positive, just go with one that is smaller area (smaller number of pixels).
+    So I have to include it in the reducer at some point too.
+
+
+- NEW REDUCER BROKEN, FIX IT
